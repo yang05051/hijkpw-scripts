@@ -479,7 +479,7 @@ getData() {
 }
 
 installNginx() {
-
+    echo "Nginx will not be installed by default."
 }
 
 startNginx() {
