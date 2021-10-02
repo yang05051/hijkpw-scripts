@@ -34,11 +34,11 @@ CONFIG_FILE="/usr/local/etc/xray/config.json"
 OS=`hostnamectl | grep -i system | cut -d: -f2`
 
 V6_PROXY=""
-# IP=`curl -sL -4 ip.sb`
-# if [[ "$?" != "0" ]]; then
-#    IP=`curl -sL -6 ip.sb`
-#    V6_PROXY="https://gh.hijk.art/"
-# fi
+IP=`curl -sL -4 ip.sb`
+if [[ "$?" != "0" ]]; then
+    IP=`curl -sL -6 ip.sb`
+    V6_PROXY="https://gh.hijk.art/"
+fi
 
 BT="false"
 NGINX_CONF_PATH="/etc/nginx/conf.d/"
@@ -179,8 +179,7 @@ getVersion() {
     VER=`/usr/local/bin/xray version|head -n1 | awk '{print $2}'`
     RETVAL=$?
     CUR_VER="$(normalizeVersion "$(echo "$VER" | head -n 1 | cut -d " " -f2)")"
-    TAG_URL="${V6_PROXY}https://api.github.com/repos/XTLS/Xray-core/releases/latest"
-    NEW_VER="$(normalizeVersion "$(curl -s 'https://api.github.com/repos/XTLS/Xray-core/releases/latest' | jq -r '.tag_name')")"
+    NEW_VER="$(normalizeVersion "$(curl -s '${V6_PROXY}https://api.github.com/repos/XTLS/Xray-core/releases/latest' | jq -r '.tag_name')")"
 
     if [[ $? -ne 0 ]] || [[ $NEW_VER == "" ]]; then
         colorEcho $RED " 检查Xray版本信息失败，请检查网络"
@@ -253,6 +252,7 @@ getData() {
     if [[ "$TLS" = "true" || "$XTLS" = "true" ]]; then
         echo ""
         echo " Xray一键脚本，运行之前请确认如下条件已经具备："
+        colorEcho ${YELLOW} "  0. Nginx is installed."
         colorEcho ${YELLOW} "  1. 一个伪装域名"
         colorEcho ${YELLOW} "  2. 伪装域名DNS解析指向当前服务器ip（${IP}）"
         colorEcho ${BLUE} "  3. 如果/root目录下有 xray.pem 和 xray.key 证书密钥文件，无需理会条件2"
@@ -479,7 +479,7 @@ getData() {
 }
 
 installNginx() {
-    echo "Nginx will not be installed by default."
+    echo "Nginx installation skipped."
 }
 
 startNginx() {
@@ -1369,10 +1369,6 @@ install() {
     else
         colorEcho $BLUE " 安装Xray ${NEW_VER} ，架构$(archAffix)"
         installXray
-        stop
-        start
-
-        colorEcho $GREEN " 最新版Xray安装成功！"
     fi
 
     configXray
