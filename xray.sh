@@ -179,7 +179,7 @@ getVersion() {
     VER=`/usr/local/bin/xray version|head -n1 | awk '{print $2}'`
     RETVAL=$?
     CUR_VER="$(normalizeVersion "$(echo "$VER" | head -n 1 | cut -d " " -f2)")"
-    NEW_VER="$(normalizeVersion "$(curl -s '"$V6_PROXY"https://api.github.com/repos/XTLS/Xray-core/releases/latest' | jq -r '.tag_name')")"
+    NEW_VER="$(normalizeVersion "$(curl -s '${V6_PROXY}https://api.github.com/repos/XTLS/Xray-core/releases/latest' | jq -r '.tag_name')")"
 
     if [[ $? -ne 0 ]] || [[ $NEW_VER == "" ]]; then
         colorEcho $RED " 检查Xray版本信息失败，请检查网络"
