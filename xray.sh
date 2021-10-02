@@ -1402,18 +1402,18 @@ update() {
 
     getVersion
     RETVAL="$?"
-    if [[ $RETVAL == 0 ]]; then
-        colorEcho $BLUE " Xray最新版 ${CUR_VER} 已经安装"
-    elif [[ $RETVAL == 3 ]]; then
-        exit 1
-    else
+  #  if [[ $RETVAL == 0 ]]; then
+   #     colorEcho $BLUE " Xray最新版 ${CUR_VER} 已经安装"
+  #  elif [[ $RETVAL == 3 ]]; then
+  #      exit 1
+   # else
         colorEcho $BLUE " 安装Xray ${NEW_VER} ，架构$(archAffix)"
         installXray
         stop
         start
 
         colorEcho $GREEN " 最新版Xray安装成功！"
-    fi
+   # fi
 }
 
 uninstall() {
