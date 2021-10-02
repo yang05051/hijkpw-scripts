@@ -34,11 +34,11 @@ CONFIG_FILE="/usr/local/etc/xray/config.json"
 OS=`hostnamectl | grep -i system | cut -d: -f2`
 
 V6_PROXY=""
-IP=`curl -sL -4 ip.sb`
-if [[ "$?" != "0" ]]; then
-    IP=`curl -sL -6 ip.sb`
-    V6_PROXY="https://gh.hijk.art/"
-fi
+# IP=`curl -sL -4 ip.sb`
+# if [[ "$?" != "0" ]]; then
+#    IP=`curl -sL -6 ip.sb`
+#    V6_PROXY="https://gh.hijk.art/"
+# fi
 
 BT="false"
 NGINX_CONF_PATH="/etc/nginx/conf.d/"
