@@ -235,15 +235,15 @@ gpgcheck=1' >>  /etc/yum.repos.d/mariadb.repo
 
 installWordPress() {
     mkdir -p /var/www
-    wget https://cn.wordpress.org/latest-zh_CN.tar.gz
-    if [[ ! -f latest-zh_CN.tar.gz ]]; then
+    wget https://www.wordpress.org/latest.tar.gz
+    if [[ ! -f latest.tar.gz ]]; then
     	colorEcho $RED " 下载WordPress失败，请稍后重试"
 	    exit 1
     fi
-    tar -zxf latest-zh_CN.tar.gz
+    tar -zxf latest.tar.gz
     rm -rf /var/www/$DOMAIN
     mv wordpress /var/www/$DOMAIN
-    rm -rf latest-zh_CN.tar.gz
+    rm -rf latest.tar.gz
 }
 
 config() {
