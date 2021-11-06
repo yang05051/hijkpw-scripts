@@ -480,7 +480,7 @@ getData() {
 }
 
 installNginx() {
-    echo "Nginx installation skipped."
+    systemctl enable nginx
 }
 
 startNginx() {
