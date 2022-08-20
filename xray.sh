@@ -732,6 +732,7 @@ setFirewall() {
                 ufw allow ${PORT}/tcp
                 ufw allow ${PORT}/udp
             fi
+	    ufw reload
         else
             res_3=`which iptables 2>/dev/null`
             nl=`iptables -nL | nl | grep FORWARD | awk '{print $1}'`
