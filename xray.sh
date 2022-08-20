@@ -734,9 +734,8 @@ setFirewall() {
             fi
 	    ufw reload
         else
-            res_3=`which iptables 2>/dev/null`
             nl=`iptables -nL | nl | grep FORWARD | awk '{print $1}'`
-            if [[ "$res_3" -eq 0 && "$nl" != "3" ]]; then
+            if [[ "$nl" != "3" ]]; then
                 # iptables -I INPUT -p tcp --dport 80 -j ACCEPT
                 iptables -I INPUT -p tcp --dport 443 -j ACCEPT
                 if [[ "$PORT" != "443" ]]; then
