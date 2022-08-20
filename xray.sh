@@ -732,7 +732,7 @@ setFirewall() {
                 ufw allow ${PORT}/tcp
                 ufw allow ${PORT}/udp
             fi
-	        ufw reload
+            ufw reload
         else
             nl=`iptables -nL | nl | grep FORWARD | awk '{print $1}'`
             if [[ "$nl" != "3" ]]; then
