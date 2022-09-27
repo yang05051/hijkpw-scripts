@@ -253,10 +253,10 @@ getData() {
     if [[ "$TLS" = "true" || "$XTLS" = "true" ]]; then
         echo ""
         echo " Xray一键脚本，运行之前请确认如下条件已经具备："
-        colorEcho ${YELLOW} "  0. Nginx is installed."
-        colorEcho ${YELLOW} "  1. 一个伪装域名"
-        colorEcho ${YELLOW} "  2. 伪装域名DNS解析指向当前服务器ip（${IP}）"
-        colorEcho ${BLUE} "  3. 如果/root目录下有 xray.pem 和 xray.key 证书密钥文件，无需理会条件2"
+        colorEcho ${YELLOW} "  1. Nginx 已提前安装 (脚本位于 github.com/yang05051/Scripts)"
+        colorEcho ${YELLOW} "  2. 一个伪装域名"
+        colorEcho ${YELLOW} "  3. 伪装域名DNS解析指向当前服务器IP（${IP}）"
+        colorEcho ${BLUE} "  4. 如果/root目录下有 xray.pem 和 xray.key 证书密钥文件，无需理会条件3"
         echo " "
         read -p " 确认满足按y，按其他退出脚本：" answer
         if [[ "${answer,,}" != "y" ]]; then
@@ -282,11 +282,8 @@ getData() {
             CERT_FILE="/usr/local/etc/xray/${DOMAIN}.pem"
             KEY_FILE="/usr/local/etc/xray/${DOMAIN}.key"
         else
-            resolve=`curl -sL https://hijk.art/hostip.php?d=${DOMAIN}`
-            res=`echo -n ${resolve} | grep ${IP}`
-            if [[ -z "${res}" ]]; then
-                colorEcho ${BLUE}  "${DOMAIN} 解析结果：${resolve}"
-                colorEcho ${RED}  " 域名未解析到当前服务器IP(${IP})!"
+            if [[ "$(dig +short ${DOMAIN})" != "${IP}" ]]; then
+                colorEcho ${RED}  " 域名未解析到当前服务器IP (${IP})!"
                 exit 1
             fi
         fi
