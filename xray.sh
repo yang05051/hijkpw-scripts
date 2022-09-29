@@ -289,6 +289,7 @@ getData() {
 		    yum install bind-utils -y
 		else
 		    colorEcho ${RED}  " 不支持当前系统!"
+		    exit 0
 		fi
 	    fi
             if [[ "$(dig +short ${DOMAIN})" != "${IP}" ]]; then
