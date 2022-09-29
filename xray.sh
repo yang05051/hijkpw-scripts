@@ -282,10 +282,10 @@ getData() {
             CERT_FILE="/usr/local/etc/xray/${DOMAIN}.pem"
             KEY_FILE="/usr/local/etc/xray/${DOMAIN}.key"
         else
-	    if [[ "$(which dig)" == "" ]]; then
-	        if [[ "$(which apt)" != "" ]]; then
+	    if [[ -z $(which dig) ]]; then
+	        if [[ ! -z $(which apt) ]]; then
 		    apt install dnsutils -y
-		elif [[ "$(which yum)" != "" ]]; then
+		elif [[ ! -z $(which yum) ]]; then
 		    yum install bind-utils -y
 		else
 		    colorEcho ${RED}  " 不支持当前系统!"
