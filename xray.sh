@@ -282,6 +282,15 @@ getData() {
             CERT_FILE="/usr/local/etc/xray/${DOMAIN}.pem"
             KEY_FILE="/usr/local/etc/xray/${DOMAIN}.key"
         else
+	    if [[ "$(which dig)" == "" ]]; then
+	        if [[ "$(which apt)" != "" ]]; then
+		    apt install dnsutils -y
+		elif [[ "$(which yum)" != "" ]]; then
+		    yum install bind-utils -y
+		else
+		    colorEcho ${RED}  " 不支持当前系统!"
+		fi
+	    fi
             if [[ "$(dig +short ${DOMAIN})" != "${IP}" ]]; then
                 colorEcho ${RED}  " 域名未解析到当前服务器IP (${IP})!"
                 exit 1
